@@ -1,0 +1,19 @@
+{
+  "name": "learning-bash",
+  "version": "1.0.0",
+  "description": "Sync bashing learning resources from tldp.org via Node.js",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/micjamking/learning-bash.git"
+  },
+  "author": "Mike King",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/micjamking/learning-bash/issues"
+  },
+  "homepage": "https://github.com/micjamking/learning-bash#readme"
+}
