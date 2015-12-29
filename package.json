@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "Sync bashing learning resources from tldp.org via Node.js",
   "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/micjamking/learning-bash.git"
@@ -15,5 +12,9 @@
   "bugs": {
     "url": "https://github.com/micjamking/learning-bash/issues"
   },
-  "homepage": "https://github.com/micjamking/learning-bash#readme"
+  "homepage": "https://github.com/micjamking/learning-bash#readme",
+  "dependencies": {
+    "rimraf": "^2.5.0",
+    "tarball-extract": "0.0.3"
+  }
 }
