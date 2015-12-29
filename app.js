@@ -77,7 +77,7 @@ function getPages(files, directory){
 
 app.get('/', function(req, res){
   res.send('<a href="/abs-guide">Advanced Bash Scripting Guide</a>\n<a href="/bash-beginners-guide">Bash Guide for Beginners</a>');
-  loadPage();
+  //loadPage();
 });
 
 app.listen('8000')
