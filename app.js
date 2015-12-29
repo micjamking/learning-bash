@@ -54,10 +54,23 @@ function loadPage() {
 
 function getPages(files, directory){
   files.forEach( function( file ) {
-    var path = '/' + directory + '/' + file.replace(/.html/g, '');
-    console.log( 'Creating route for' + path);
+    
+    var old_directory = (directory === 'bash-beginners-guide') ? 'Bash-Beginners-Guide' : directory;
+    
+    var path = (file === 'index.html') ? '/' + directory + '/' : '/' + directory + '/' + file.replace(/.html/g, '');
+    
     app.get( path, function(req, res) {
-      res.sendfile( directory + '/' + file );
+      res.sendFile( '/' + file, { root: __dirname + '/' + directory } );
+    });
+
+    // Redirect if .html
+    app.get( path + '.html', function(req, res) {
+      res.redirect(path);
+    });
+
+    // Redirect capitalized path name to lowercase
+    app.get( '/' + old_directory + '/' + file, function(req, res){
+      res.redirect(path);
     });
   });
 }
@@ -65,7 +78,7 @@ function getPages(files, directory){
 loadPage();
 
 app.get('/', function(req, res){
-  res.send('Check the console...');
+  res.send('<a href="/abs-guide">Advanced Bash Scripting Guide</a>\n<a href="/bash-beginners-guide">Bash Guide for Beginners</a>');
 });
 
 app.listen('8000')
