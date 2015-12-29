@@ -18,7 +18,7 @@ var urls = [
   'http://www.tldp.org/LDP/abs/abs-guide.html.tar.gz'
 ];
 
-function loadPage(req, res){
+function loadPage() {
   
   console.log(''); // Create some space after prompt
   
@@ -26,16 +26,21 @@ function loadPage(req, res){
 
     console.log('Fetching ' + url.blue + '\n');
 
-    var tarname  = url.substring( url.lastIndexOf( '/' ) + 1 ),
-        filename = tarname.substring( 0, tarname.indexOf( '.' ) );
+    var tarname   = url.substring( url.lastIndexOf( '/' ) + 1 ),
+        directory = tarname.substring( 0, tarname.indexOf( '.' ) );
 
     function callback( err, result ){
       if ( !err ) {
         // Remove *tar.gz
         rimraf(tarname, function() { 
           // Rename file
-          fs.rename(filename, filename.toLowerCase(), function() {
-            console.log( 'Downloaded ' + filename.toLowerCase().green + ' successfully!\n' );
+          var filename = directory.toLowerCase();
+
+          fs.rename(directory, filename, function() {
+            console.log( 'Downloaded ' + filename.green + ' successfully!\n' );
+            
+            getPages( fs.readdirSync( filename ), filename );
+                                 
           });
         });
       } else { 
@@ -45,10 +50,23 @@ function loadPage(req, res){
 
     tarball.extractTarballDownload( url, tarname, './', {}, callback);
   });
-
-  res.send('Check the console...')
 }
 
-app.get('/', loadPage);
+function getPages(files, directory){
+  files.forEach( function( file ) {
+    var path = '/' + directory + '/' + file.replace(/.html/g, '');
+    console.log( 'Creating route for' + path);
+    app.get( path, function(req, res) {
+      res.sendfile( directory + '/' + file );
+    });
+  });
+}
+
+loadPage();
+
+app.get('/', function(req, res){
+  res.send('Check the console...');
+});
+
 app.listen('8000')
 exports = module.exports = app;
