@@ -12,6 +12,10 @@ var express = require('express');
 
 var app = express();
 
+// set the port of our application
+// process.env.PORT lets the port be set by Heroku
+var port = process.env.PORT || 8080;
+
 /** @private */
 var urls = [
   'http://www.tldp.org/LDP/Bash-Beginners-Guide/Bash-Beginners-Guide.html.tar.gz',
@@ -80,5 +84,7 @@ app.get('/', function(req, res){
   //loadPage();
 });
 
-app.listen('8000')
+app.listen(port, function() {
+  console.log('Our app is running on http://localhost:' + port);
+});
 exports = module.exports = app;
