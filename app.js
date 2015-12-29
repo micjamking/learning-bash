@@ -5,7 +5,8 @@
 
 /** @require */
 var tarball = require('tarball-extract');
-var rimraf = require('rimraf');
+var rimraf  = require('rimraf');
+var colors  = require('colors');
 
 /** @private */
 var urls = [
@@ -13,14 +14,20 @@ var urls = [
   'http://www.tldp.org/LDP/abs/abs-guide.html.tar.gz'
 ];
 
+console.log('\n');
+
 urls.forEach( function( url ) {
 
+  console.log('Fetching ' + url.blue + '\n');
+
   var tarname  = url.substring( url.lastIndexOf( '/' ) + 1 ),
-      filename = tarname.substring( 0, tarname.indexOf( '.' ) );
+      filename = tarname.substring( 0, tarname.indexOf( '.' ) ).toLowerCase();
 
   function callback( err, result ){
     if ( !err ) {
-      console.log( result );
+      rimraf(tarname, function() { 
+        console.log( 'Downloaded ' + result.destination.green + ' successfully!' );
+      });
     } else { 
       console.log( err );
     }
